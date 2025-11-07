@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Thiện nguyện - Góp mì cho em 3</title>
+    <style>
+        /* Reset và base */
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f8f8f8;
+            color: #222;
+        }
+        a {
+            text-decoration: none;
+            color: #f2693d;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Header */
+        header {
+            background: #fff;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+            font-size: 20px;
+            color: #f2693d;
+            margin-right: 20px;
+        }
+        .logo svg {
+            width: 28px;
+            height: 28px;
+            margin-right: 8px;
+        }
+        .search-box {
+            flex: 1;
+            position: relative;
+        }
+        .search-box input {
+            width: 100%;
+            border-radius: 25px;
+            border: 1.5px solid #ccc;
+            padding: 7px 40px 7px 15px;
+            font-size: 14px;
+        }
+        .search-box svg {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            fill: #f2693d;
+            width: 18px;
+            height: 18px;
+        }
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-left: 20px;
+            font-size: 14px;
+        }
+        nav > div, nav > a {
+            position: relative;
+            cursor: pointer;
+            color: #222;
+        }
+        nav > div:hover > .dropdown {
+            display: block;
+        }
+        nav > div > .dropdown {
+            display: none;
+            position: absolute;
+            top: 30px;
+            background: white;
+            box-shadow: 0 0 6px rgba(0,0,0,0.15);
+            border-radius: 5px;
+            min-width: 120px;
+            z-index: 10;
+        }
+        nav > div > .dropdown a {
+            display: block;
+            padding: 8px 15px;
+            color: #222;
+            white-space: nowrap;
+        }
+        nav > div > .dropdown a:hover {
+            background: #f2693d;
+            color: white;
+        }
+        .btn-create {
+            background: #f2693d;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 25px;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+        .btn-create:hover {
+            background: #d1572e;
+        }
+
+        /* Trusted organizations */
+        .trusted-org {
+            background: #fafafa;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            justify-content: center;
+        }
+        .trusted-org-text {
+            font-weight: bold;
+            margin-right: 20px;
+            white-space: nowrap;
+        }
+        .trusted-org img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+        }
+
+        /* Buttons area */
+        .actions {
+            background: #f0f0f0;
+            padding: 30px 20px;
+            text-align: center;
+            gap: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .actions button {
+            border: none;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .btn-explore {
+            background: #f2693d;
+            color: white;
+        }
+        .btn-explore:hover {
+            background: #d1572e;
+        }
+        .btn-fundraise {
+            background: #4049f4;
+            color: white;
+        }
+        .btn-fundraise:hover {
+            background: #2a31c6;
+        }
+
+        /* Footer */
+        footer {
+            background: white;
+            padding: 30px 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            justify-content: space-between;
+            border-top: 1px solid #eee;
+            font-size: 14px;
+            color: #555;
+        }
+        .footer-section {
+            min-width: 150px;
+        }
+        .footer-section h4 {
+            margin-top: 0;
+            margin-bottom: 12px;
+            font-weight: bold;
+            color: #222;
+        }
+        .footer-section a, .footer-section p {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+        }
+        .footer-logo {
+            color: #f2693d;
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .footer-logo svg {
+            width: 24px;
+            height: 24px;
+        }
+        .app-download {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .app-download img {
+            width: 140px;
+            cursor: pointer;
+        }
+        .highlight-green {
+            background-color: #d6ff3c;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 14px;
+            color: #000;
+            display: inline-block;
+            margin-top: 10px;
+        }
+        .highlight-blue {
+            background-color: #0000ff;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-weight: 900;
+            font-size: 16px;
+            color: white;
+            display: inline-block;
+            margin-top: 5px;
+        }
+        /* Content page styling */
+        .content-wrapper {
+            max-width: 1200px;
+            background: white;
+            margin: 30px auto;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgb(0 0 0 / 0.05);
+            display: flex;
+            gap: 25px;
+        }
+        .content-main {
+            flex: 3;
+        }
+        .content-sidebar {
+            flex: 1.3;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 8px rgb(0 0 0 / 0.1);
+            padding: 20px;
+            font-size: 14px;
+            color: #222;
+            position: sticky;
+            top: 20px;
+            height: fit-content;
+        }
+        .content-main h1 {
+            margin-top: 0;
+            color: #222;
+        }
+
+        .funding-progress {
+            margin-top: 10px;
+            background: #eee;
+            border-radius: 12px;
+            overflow: hidden;
+            height: 14px;
+        }
+        .funding-progress span {
+            display: block;
+            height: 14px;
+            background: #f2693d;
+            width: 24%;
+        }
+
+        .funding-info {
+            margin-top: 10px;
+            font-weight: bold;
+            color: #f2693d;
+        }
+        .funding-details {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            margin-top: 8px;
+            color: #555;
+        }
+
+        /* Buttons share/ donate */
+        .btn-group {
+            margin-top: 20px;
+            display: flex;
+            gap: 12px;
+        }
+        .btn-share, .btn-donate {
+            cursor: pointer;
+            padding: 10px 18px;
+            border-radius: 10px;
+            font-weight: bold;
+            width: 50%;
+            border: 1.5px solid #f2693d;
+            text-align: center;
+        }
+        .btn-share {
+            background: white;
+            color: #f2693d;
+        }
+        .btn-share:hover {
+            background: #f2693d;
+            color: white;
+            border-color: #d1572e;
+        }
+        .btn-donate {
+            background: #f2693d;
+            color: white;
+            border: none;
+        }
+        .btn-donate:hover {
+            background: #d1572e;
+        }
+        /* QR code container */
+        .qr-code-block {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .qr-code-block img {
+            margin-bottom: 12px;
+            width: 180px;
+            height: 180px;
+        }
+        .qr-download {
+            background: #44c767;
+            color: white;
+            padding: 8px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            display: inline-block;
+            font-weight: bold;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+        .qr-download:hover {
+            background: #3ab14b;
+        }
+
+        /* Campaign image and description */
+        .campaign-image {
+            border-radius: 15px;
+            overflow: hidden;
+            max-width: 600px;
+            box-shadow: 0 0 8px rgba(0,0,0,0.1);
+        }
+        .campaign-image img {
+            display: block;
+            border-radius: 15px;
+        }
+        /* Small thumbnail */
+        .thumb-small {
+            display: block;
+            width: 100px;
+            margin-top: 10px;
+            border-radius: 12px;
+            box-shadow: 0 0 5px rgb(0 0 0 / 0.1);
+            cursor: pointer;
+        }
+
+        /* Details text */
+        .details-text p, .details-text ul, .details-text ol {
+            margin-top: 0;
+            margin-bottom: 12px;
+            line-height: 1.55;
+            font-size: 15px;
+            font-weight: 400;
+        }
+
+        /* Tags for hashtags */
+        .tag {
+            background: #d6ff3c;
+            padding: 4px 8px;
+            border-radius: 12px;
+            display: inline-block;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .tag-blue {
+            background: #0c24ff;
+            color: white;
+            text-transform: uppercase;
+            font-weight: 900;
+            font-size: 16px;
+            padding: 2px 8px;
+        }
+
+        /* Modal style for dropdown */
+        .dropdown-item {
+            font-size: 14px;
+            padding: 6px 12px;
+            color: #222;
+            cursor: pointer;
+        }
+        .dropdown-item:hover {
+            background-color: #f2693d;
+            color: white;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 1050px) {
+            .content-wrapper {
+                flex-direction: column;
+            }
+            .content-sidebar {
+                position: relative;
+                top: unset;
+                height: auto;
+            }
+            .trusted-org {
+                flex-wrap: wrap;
+                gap: 10px;
+                justify-content: center;
+            }
+            nav {
+                margin-left: 0;
+                gap: 10px;
+                font-size: 13px;
+            }
+            nav > div, nav > a {
+                font-size: 13px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="logo" aria-label="Logo Thiennguyen">
+            <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path d="M10 0C6.686 0 4 4.5 4 10c0 5.5 6 10 6 10s6-4.5 6-10c0-5.5-2.686-10-6-10zM9 15.438v-3.438H7V11h2v-1.8l1-1.9h2.067c.12 0 .2.115.14.22l-2.967 5.85H9zM7 7h3a1 1 0 0 0-2-1h-1v1z" />
+            </svg>
+            Thiennguyen
+        </div>
+
+        <div class="search-box" role="search">
+            <input type="search" placeholder="Tìm kiếm tên chiến dịch" aria-label="Tìm kiếm tên chiến dịch" />
+            <svg viewBox="0 0 24 24">
+                <path fill="currentColor" d="M21 20l-5.8-5.8a6.5 6.5 0 1 0-1.4 1.4L20 21zM11 18a7 7 0 1 1 0-14 7 7 0 0 1 0 14z"/>
+            </svg>
+        </div>
+
+        <nav aria-label="Menu chính">
+            <div tabindex="0" aria-haspopup="true" aria-expanded="false">Ủng hộ
+                <div class="dropdown" role="menu" aria-label="Ủng hộ dropdown">
+                    <a href="#" role="menuitem">Chiến dịch</a>
+                    <a href="#" role="menuitem">Đồng hành</a>
+                    <a href="#" role="menuitem">Tổ chức gây quỹ</a>
+                    <a href="#" role="menuitem">Cá nhân gây quỹ</a>
+                </div>
+            </div>
+            <div tabindex="0" aria-haspopup="true" aria-expanded="false">Gây quỹ
+                <div class="dropdown" role="menu" aria-label="Gây quỹ dropdown">
+                    <a href="#" role="menuitem">Bắt đầu</a>
+                </div>
+            </div>
+            <div tabindex="0" aria-haspopup="true" aria-expanded="false">Khám phá
+                <div class="dropdown" role="menu" aria-label="Khám phá dropdown">
+                    <a href="#" role="menuitem">Bản đồ thiện nguyện</a>
+                    <a href="#" role="menuitem">Sự kiện thiện nguyện</a>
+                    <a href="#" role="menuitem">Bảng tin</a>
+                    <a href="#" role="menuitem">Tin tức</a>
+                </div>
+            </div>
+            <div tabindex="0" aria-haspopup="true" aria-expanded="false">Giới thiệu
+                <div class="dropdown" role="menu" aria-label="Giới thiệu dropdown">
+                    <a href="#" role="menuitem">Về thiện nguyện</a>
+                    <a href="#" role="menuitem">Hỏi đáp</a>
+                    <a href="#" role="menuitem">Điều khoản sử dụng</a>
+                    <a href="#" role="menuitem">Chính sách bảo mật</a>
+                </div>
+            </div>
+
+            <a href="#" class="btn-create" role="button">Tạo chiến dịch</a>
+            <a href="#" role="button" style="font-weight: 600;">Đăng nhập</a>
+        </nav>
+    </header>
+
+    <!-- Trusted organizations -->
+    <section class="trusted-org" aria-label="Tổ chức và cá nhân tin dùng">
+        <div class="trusted-org-text">Được hơn 1727 tổ chức, cá nhân tin dùng</div>
+        <img src="./ảnh/Hội_Chữ_thập_đỏ_Việt_Nam.svg.png" alt="Logo Hội Chữ thập đỏ Việt Nam" />
+        <img src="./ảnh/hoi-cuu-tro-logo.jpg" alt="Logo Liên hiệp các Hội người khuyết tật Việt Nam" />
+        <img src="./ảnh/logo-footer-1557471200.png" alt="Logo Quỹ Thiện Tâm" />
+        <img src="./ảnh/images.jpg" alt="Logo Hope Foundation" />
+        <img src="./ảnh/Logo_Vava.png" alt="Logo VAVA" />
+        <img src="./ảnh/qnacr-file-source-ai-vector-011489.png" alt="Logo QNACR" />
+        <img src="./ảnh/images (1).jpg" alt="Logo Trung tâm Tình nguyện Quốc gia" />
+        <img src="./ảnh/images.png" alt="Logo Mạng lưới tình nguyện toàn cầu" />
+    </section>
+
+    <!-- Action buttons -->
+    <section class="actions" role="region" aria-label="Nút hành động chính">
+        <button class="btn-explore" type="button">Khám phá chiến dịch</button>
+        <button class="btn-fundraise" type="button">Bắt đầu gây quỹ</button>
+    </section>
+
+    <!-- Content Campaign block example -->
+    <main class="content-wrapper" role="main">
+        <article class="content-main" aria-label="Chi tiết chiến dịch Góp mì cho em 3">
+            <h1>GÓP MÌ CHO EM 3</h1>
+            <div class="campaign-image" aria-label="Hình ảnh chiến dịch Góp mì cho em 3">
+                <img src="./ảnh/mỳ.jpg" alt="Ảnh bé gái cười rạng rỡ cùng tô mì" style="width: ;" />
+            </div>
+            <div class="details-text">
+                <p>11/2025 – CHƯƠNG TRÌNH “GÓP MÌ CHO EM 3” 🥘🤝</p>
+                <p>– Có hỗ trợ Giấy chứng nhận mộc đỏ sống, Giấy khen Đoàn – Mặt trận, cùng kế hoạch tổ chức minh bạch –</p>
+                <p>Ở nhiều vùng quê miền Tây, khi gió lạnh đầu mùa tràn về, cuộc sống của bà con vẫn còn chật vật. Có những gia đình phải dè sẻn từng bữa, lo từng gói mì để qua ngày. Mùa đông đang đến, chỉ một phần quà nhỏ – với món nhu yếu phẩm, chút sẻ chia – cũng đủ giúp bà con thấy ấm lòng hơn, và để những đứa trẻ có thêm niềm vui trong những ngày cuối năm. ❄️🤝</p>
+                <p>Tiếp nối tinh thần sẻ chia của các chương trình trước, Dự án Lá Xanh chính thức phát động “GÓP MÌ CHO EM 3”, với mong muốn mang những phần quà thiết thực đến bà con và trẻ em tại:
+                  <br>📍 Dự kiến Xã Mỹ Hòa Hưng (An Giang) và xã Vĩnh Lợi (Bạc Liêu).</p>
+                <p>🎯 Mục tiêu chương trình
+                  <br>Tổng kinh phí dự kiến: 110.000.000 VNĐ
+                  <br>▪ Quà tặng và nhu yếu phẩm cho bà con khó khăn: 100.000.000 VNĐ
+                  <br>▪ Chi phí in ấn, di chuyển, vận hành, truyền thông, quầy hàng trò chơi – ăn uống: 10.000.000 VNĐ
+                </p>
+                <p>🤝 Hình thức đóng góp
+                  <br>✅ Hiện kim và hiện vật (gấu bông)
+                  <br>✅ Chuyển khoản qua Momo – 99MM25311MC0001330 (Cú pháp: Họ tên + GMCE3)
+                  <br>👉 GMCE là viết tắt của “Góp mì cho em”
+                  <img src="./ảnh/z7198831282491_1f46398d75b1f2cc4ca61fe79fe87201.jpg" alt="QR Chuyển khoản" style="width:370px; border-radius:10px;>
+                  <br> Hoặc ủng hộ qua app:
+                  <br> <a href="https://thiennguyen.app/donate-target/1975541415832211456" target="_blank" rel="noopener noreferrer">
+                </p>
+                <p>📜 Giấy chứng nhận & Giấy khen
+                  <br>🎓 Quyên góp từ 35.000 VNĐ hoặc 3 con gấu bông giặt sạch: Nhận Giấy chứng nhận bản online hoặc bản cứng (mộc đỏ địa phương)
+                  <br>🥉 Quyên góp từ 499.000 VNĐ hoặc 50 con gấu bông đã giặt sạch: Nhận Giấy khen của Đoàn Thanh Niên
+                  <br>🥇 Quyên góp từ 699.000 VNĐ: Nhận Giấy khen của Ủy ban Mặt trận Tổ quốc Việt Nam
+                </p>
+                <p>⏰ Thời gian cấp giấy
+                  <br>📄 Giấy chứng nhận online/mộc đỏ online: 25/11 – 10/12/2025
+                  <br>📜 Giấy bản cứng & Giấy khen: 1/12 – 15/12/2025
+                </p>
+                <p>💭 Hướng dẫn tham gia
+                  <br>1. Chuyển khoản hoặc quyên góp từ 35k trở lên qua hướng dẫn trên hoặc số tài khoản sao kê tự động.
+                  <br>2. Chia sẻ bài viết công khai kèm hashtag #DuanLaXanh #GopMiChoEm3, tag 2 người bạn để lan toả yêu thương.
+                  <br>3. Like bài viết: <a href="https://www.facebook.com/share/p/17kjUzzi3N/" target="_blank" rel="noopener noreferrer">https://www.facebook.com/share/p/17kjUzzi3N/</a>
+                  <br>4. Điền form nhận giấy chứng nhận tại:
+                  <br>🔗 <a href="https://forms.gle/bqXbH1AARwMv1yEz9" target="_blank" rel="noopener noreferrer">https://forms.gle/bqXbH1AARwMv1yEz9</a>
+                </p>
+                <p>🎁 Quyền lợi khi đóng góp
+                  <br>Nhận Giấy chứng nhận xác nhận quyên góp từ địa phương thụ hưởng.
+                  <br>Nhận Giấy khen Đoàn Thanh Niên / Mặt trận Tổ quốc Việt Nam tùy mức đóng góp.
+                  <br>Có thể bổ sung vào hồ sơ tình nguyện, tăng điểm rèn luyện, hoặc chứng minh hoạt động xã hội.
+                  <br>Doanh nghiệp, tổ chức, fandom được cấp Giấy xác nhận quyên góp chính thức để phục vụ cho công tác báo cáo, xét khen thưởng.
+                </p>
+            </div>
+        </article>
+
+        <aside class="content-sidebar" aria-label="Thông tin người vận động">
+            <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px;">
+                <img src="https://upload.wikimedia.org/wikipedia/vi/0/0d/VAVA_logo.png" alt="" style="width:50px; border-radius:50%;" />
+                <div>
+                    <b style="color:#f2693d;">Dự Án Thiện Nguyện Lá Xanh</b>
+                    <div style="font-size: 12px; margin-top: 4px; background:#e2efff; display:inline-block; padding:2px 6px; border-radius:10px; color:#0c24ff;">Cá nhân</div>
+                </div>
+            </div>
+            <p>
+                <b>Email:</b><br />
+                <a href="mailto:duanthiennguyenlaxanh@gmail.com">duanthiennguyenlaxanh@gmail.com</a>
+            </p>
+            <p>
+                <b>Facebook:</b><br />
+                <a href="https://www.facebook.com/duanthiennguyenlaxanh?mibextid=LQQJ4d" target="_blank" rel="noopener noreferrer">
+                    https://www.facebook.com/duanthiennguyenlaxanh?mibextid=LQQJ4d
+                </a>
+            </p>
+
+            <div class="funding-info" aria-label="Thông tin khoản quyên góp, tiến độ">
+                <div>Mục tiêu chiến dịch</div>
+                <div style="font-size:20px; color:#2a7c27;">110.000.000 VND</div>
+                <div>Thời gian còn lại</div>
+                <div style="font-size:20px; color:#287bd8;">23 ngày</div>
+            </div>
+
+            <div class="funding-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="31" aria-label="Tỷ lệ quyên góp 31 phần trăm">
+                <span style="width:31%;"></span>
+            </div>
+            <div class="funding-details">
+                <span>Đã đạt được 34.646.248 VND</span><span>31%</span>
+            </div>
+
+            <div class="btn-group" role="group" aria-label="Chia sẻ và ủng hộ">
+                <button class="btn-share" type="button">Chia sẻ</button>
+                <button class="btn-donate" type="button">Ủng hộ</button>
+            </div>
+
+            <div class="qr-code-block" aria-label="Mã QR để ủng hộ">
+                <img src="./ảnh/z7198831282491_1f46398d75b1f2cc4ca61fe79fe87201.jpg" alt="" />
+                <button class="qr-download" type="button">Tải mã QR</button>
+            </div>
+        </aside>
+    </main>
+
+    <!-- FOOTER -->
+    <footer aria-label="Chân trang">
+        <div class="footer-section">
+            <div class="footer-logo" aria-label="Logo Thiện nguyện">
+                <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" style="width:24px; height:24px;">
+                    <path d="M10 0C6.686 0 4 4.5 4 10c0 5.5 6 10 6 10s6-4.5 6-10c0-5.5-2.686-10-6-10zM9 15.438v-3.438H7V11h2v-1.8l1-1.9h2.067c.12 0 .2.115.14.22l-2.967 5.85H9zM7 7h3a1 1 0 0 0-2-1h-1v1z" />
+                </svg>
+                Thiện nguyện
+            </div>
+            <p>Giải pháp thuộc Đề án Hệ tri thức Việt số hóa (iTrithuc), cấu phần Nền tảng nhân đạo số quốc gia do MBBank xây dựng và vận hành theo Quyết định số 3068/QĐ-BKHCN</p>
+            <small><strong>Powered by </strong>⭐MB</small>
+        </div>
+        <div class="footer-section" aria-label="Ưng hộ">
+            <h4>Ủng hộ</h4>
+            <a href="#">Chiến dịch</a>
+            <a href="#">Đồng hành</a>
+            <a href="#">Tổ chức gây quỹ</a>
+            <a href="#">Cá nhân gây quỹ</a>
+        </div>
+        <div class="footer-section" aria-label="Gây quỹ">
+            <h4>Gây quỹ</h4>
+            <a href="#">Bắt đầu</a>
+        </div>
+        <div class="footer-section" aria-label="Khám phá">
+            <h4>Khám phá</h4>
+            <a href="#">Bản đồ thiện nguyện</a>
+            <a href="#">Sự kiện thiện nguyện</a>
+            <a href="#">Bảng tin</a>
+            <a href="#">Tin tức</a>
+            <div class="tag">#HiGreen</div>
+            <div>
+                <span class="tag">#HiGreen</span>
+                <span class="tag-blue">TRƯỜNG SA</span>
+            </div>
+        </div>
+        <div class="footer-section" aria-label="Giới thiệu">
+            <h4>Giới thiệu</h4>
+            <a href="#">Về thiện nguyện</a>
+            <a href="#">Hỏi đáp</a>
+            <a href="#">Điều khoản sử dụng</a>
+            <a href="#">Chính sách bảo mật</a>
+        </div>
+        <div class="footer-section" aria-label=" tải app để tham gia cộng đồng">
+            <h4>Tải app để tham gia cộng đồng</h4>
+            <div class="app-download">
+                <a href="#" aria-label="Tải trên App Store">
+                    <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store" />
+                </a>
+                <a href="#" aria-label="Tải trên Google Play">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play" />
+                </a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
